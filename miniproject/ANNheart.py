@@ -6,10 +6,10 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-def ANN(array) :
-    data = pd.read_csv("/content/drive/MyDrive/heart_disease_health_indicators_BRFSS2015 (1).csv")
+def ANNheart(array) :
+    data = pd.read_csv("data/heart_disease_health_indicators_BRFSS2015.csv")
     X = data.iloc[:,:4].values
-    Y = data.iloc[:,[5]].values
+    Y = data.iloc[:,[23]].values
     LE1 = LabelEncoder()
     X[:,2] = np.array(LE1.fit_transform(X[:,2]))
     ct =ColumnTransformer(transformers=[('encoder',OneHotEncoder(),[1])],remainder="passthrough")
@@ -23,6 +23,7 @@ def ANN(array) :
     ann.add(tf.keras.layers.Dense(units=6,activation="relu"))
     ann.add(tf.keras.layers.Dense(units=1,activation="sigmoid"))
     ann.compile(optimizer="adam",loss="binary_crossentropy",metrics=['accuracy'])
-    result=ann.predict(sc.transform([array]))
+    result=ann.predict(sc.transform([[2,3,4,6,5]]))
     return result
     # ann.save("ANN2.h5")
+# print(ANNheart([1]))

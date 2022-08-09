@@ -1,5 +1,5 @@
 from flask import Flask,render_template,request
-import predictions1,predictions2,predictions3
+import predictions1,predictions2,predictions3,ANNheart,ANNmaleria,ANNdiabetes
 
 app=Flask(__name__)
 
@@ -82,7 +82,8 @@ def sub4():
         userInput3 = request.form.get("bpressure")
         userInput4 = request.form.get("i")
         userInput5 = request.form.get("bmi")
-        x=predtions4.prediction(int(userInput1),int(userInput2),int(userInput3))
+        x=[userInput1,userInput2,userInput3,userInput4,userInput5]
+        x=ANNmaleria.ANNdiabetes(x)
     return render_template("sub4.html",n=x)
 
 @app.route('/malaria',methods=["GET","POST"])
@@ -93,12 +94,15 @@ def malaria():
 @app.route('/sub5',methods=["GET","POST"])
 def sub5():
     if request.method=="POST":
-        userInput1=request.form.get("preg")
-        userInput2=request.form.get("glucose")
+        userInput1 =request.form.get("preg")
+        userInput2 =request.form.get("glucose")
         userInput3 = request.form.get("bpressure")
         userInput4 = request.form.get("i")
         userInput5 = request.form.get("bmi")
         x=[userInput1,userInput5,userInput4,userInput3,userInput2]
+        x=list(map(int,x))
+        print(x)
+        x = ANNmaleria.ANNdiabetes(x)
     return render_template("sub5.html",n=x)
 
 
@@ -115,6 +119,7 @@ def sub6():
         userInput4 = request.form.get("i")
         userInput5 = request.form.get("bmi")
         x=[userInput1,userInput5,userInput4,userInput3,userInput2]
+        x=ANNmaleria.ANNdiabetes(x)
     return render_template("sub6.html",n=x)
 
 if __name__=="__main__":
