@@ -7,9 +7,9 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 def ANNdiabetes(array) :
-    data = pd.read_csv("data/malaria.csv")
-    X = data.iloc[:,:4].values
-    Y = data.iloc[:,[5]].values
+    data = pd.read_csv("data/diabetes.csv")
+    X = data.iloc[:,:3].values
+    Y = data.iloc[:,[6]].values
     LE1 = LabelEncoder()
     X[:,2] = np.array(LE1.fit_transform(X[:,2]))
     ct =ColumnTransformer(transformers=[('encoder',OneHotEncoder(),[1])],remainder="passthrough")
@@ -24,7 +24,7 @@ def ANNdiabetes(array) :
     ann.add(tf.keras.layers.Dense(units=1,activation="sigmoid"))
     ann.compile(optimizer="adam",loss="binary_crossentropy",metrics=['accuracy'])
     result=ann.predict(sc.transform([array]))
-    return result
-# x=[12,32,12,3,14]
-# x=np.array(x,dtype=float)
-# print(ANNdiabetes(x))
+    if result>0.5:
+        return "Diabetes"
+    else:
+        return "Normal"

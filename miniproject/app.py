@@ -83,7 +83,7 @@ def sub4():
         userInput4 = request.form.get("i")
         userInput5 = request.form.get("bmi")
         x=[userInput1,userInput2,userInput3,userInput4,userInput5]
-        x=ANNmaleria.ANNdiabetes(x)
+        x=ANNdiabetes.ANNdiabetes(x)
     return render_template("sub4.html",n=x)
 
 @app.route('/malaria',methods=["GET","POST"])
@@ -102,7 +102,7 @@ def sub5():
         x=[userInput1,userInput5,userInput4,userInput3,userInput2]
         x=list(map(int,x))
         print(x)
-        x = ANNmaleria.ANNdiabetes(x)
+        x = ANNmaleria.ANNmaleria(x)
     return render_template("sub5.html",n=x)
 
 
@@ -119,7 +119,7 @@ def sub6():
         userInput4 = request.form.get("i")
         userInput5 = request.form.get("bmi")
         x=[userInput1,userInput5,userInput4,userInput3,userInput2]
-        x=ANNmaleria.ANNdiabetes(x)
+        x=ANNheart.ANNheart(x)
     return render_template("sub6.html",n=x)
 
 if __name__=="__main__":

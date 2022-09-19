@@ -7,9 +7,10 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 def ANNheart(array) :
+    print("hi")
     data = pd.read_csv("data/heart_disease_health_indicators_BRFSS2015.csv")
     X = data.iloc[:,:4].values
-    Y = data.iloc[:,[23]].values
+    Y = data.iloc[:,[22]].values
     LE1 = LabelEncoder()
     X[:,2] = np.array(LE1.fit_transform(X[:,2]))
     ct =ColumnTransformer(transformers=[('encoder',OneHotEncoder(),[1])],remainder="passthrough")
@@ -23,7 +24,9 @@ def ANNheart(array) :
     ann.add(tf.keras.layers.Dense(units=6,activation="relu"))
     ann.add(tf.keras.layers.Dense(units=1,activation="sigmoid"))
     ann.compile(optimizer="adam",loss="binary_crossentropy",metrics=['accuracy'])
-    result=ann.predict(sc.transform([[2,3,4,6,5]]))
-    return result
-    # ann.save("ANN2.h5")
-# print(ANNheart([1]))
+    result=ann.predict(sc.transform([array]))
+
+    if result>0.5:
+        return "heart disease"
+    else:
+        return "Normal"
